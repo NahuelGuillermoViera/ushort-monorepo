@@ -1,0 +1,45 @@
+<section class="generationContainer">
+  <p class="title">URLs cortas para <span>grandes ideas</span></p>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input type="text" formControlName="longUrl" placeholder="https://example.com" />
+    <button class="generate" type="submit" [disabled]="form.invalid">
+      Acortar
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-arrow-right w-4 h-4 ml-2"
+      >
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </button>
+  </form>
+  @if (linkResponse().id != 0) {
+    <div class="linkData">
+      <span class="info">
+        <span class="ok">
+          <img src="/ok.svg" alt="ok">
+        </span>
+        <span class="data1">
+          Tu url corta en segundos:
+        </span>
+        <span class="data2">
+          <a href="{{ url() + linkResponse().shortPath }}" target="_blank">
+            {{ url() + linkResponse().shortPath }}
+          </a>
+        </span>
+      </span>
+      <button class="copy" (click)="copy(linkResponse().shortPath)">
+        <img src="/copy.svg" alt="copy">
+        Copiar
+      </button>
+    </div>
+  }
+</section>

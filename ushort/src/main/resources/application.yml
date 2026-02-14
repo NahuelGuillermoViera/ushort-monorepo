@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: ushort
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    spring.jpa.database-platform: ${DB_DIALECT}
+    show-sql: ${SHOW_SQL}
+    hibernate:
+      ddl-auto: update
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}
