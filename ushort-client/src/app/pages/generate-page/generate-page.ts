@@ -3,10 +3,11 @@ import { LinkService } from './../../services/link-service';
 import { Component, computed, inject, signal, Signal, WritableSignal} from '@angular/core';
 import { LinkResponse } from '../../models/link/link-response';
 import { environment } from '@/environments/environment';
+import { GeneratedContent } from '@/app/components/generated-content/generated-content';
 
 @Component({
   selector: 'app-generate-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, GeneratedContent],
   templateUrl: './generate-page.html',
   styleUrl: './generate-page.css',
 })
@@ -16,14 +17,7 @@ export class GeneratePage {
   url = signal(environment.CLIENT_URL+"/r/");
 
 
-  linkResponse: WritableSignal<LinkResponse> = signal(
-    {
-      id:0,
-      longLink:"",
-      shortPath:"",
-      clicks:0
-    }
-  )
+  linkResponse: WritableSignal<LinkResponse | null> = signal(null)
 
   form = this.fb.nonNullable.group({
     longUrl: ['', [Validators.required, Validators.pattern('https?://.+')]]
@@ -49,12 +43,4 @@ export class GeneratePage {
 
   }
 
-  async copy(link: string) {
-    console.log(link);
-    try {
-      await navigator.clipboard.writeText(this.url()+link);
-    } catch (err){
-      console.error('Error al copiar', err);
-    }
-  }
 }

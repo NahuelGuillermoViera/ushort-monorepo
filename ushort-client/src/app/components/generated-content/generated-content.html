@@ -1,0 +1,21 @@
+@if (linkResponse != null) {
+  <div class="linkData">
+    <span class="info">
+      <span class="ok">
+        <img src="/ok.svg" alt="ok">
+      </span>
+      <span class="data1">
+        Tu url corta en segundos:
+      </span>
+      <span class="data2">
+        <a href="{{ url + linkResponse.shortPath }}" target="_blank">
+          {{ url + linkResponse.shortPath }}
+        </a>
+      </span>
+    </span>
+    <button class="copy" (click)="copy(linkResponse.shortPath)">
+      <img src="/copy.svg" alt="copy">
+      Copiar
+    </button>
+  </div>
+}

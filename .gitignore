@@ -2,3 +2,4 @@ compose.yml
 ushort.nginx
 .vscode
 .github
+*.env
