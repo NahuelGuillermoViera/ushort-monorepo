@@ -1,6 +1,12 @@
 package uy.ushort.services;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uy.ushort.data.LargeURLResponse;
 import uy.ushort.data.LinkRequest;
@@ -8,6 +14,9 @@ import uy.ushort.data.LinkResponse;
 import uy.ushort.models.Link;
 import uy.ushort.repositories.LinkRepository;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +25,11 @@ public class HomeServiceImpl implements IHomeService{
 
     @Autowired
     private LinkRepository linkRepository;
+    @Autowired
+    private IQRService qrService;
+
+    @Value("${cors.allowed-origins}")
+    private String link;
 
     @Override
     public List<LinkResponse> homeResponse() {
@@ -47,7 +61,7 @@ public class HomeServiceImpl implements IHomeService{
         return new LargeURLResponse(link.getLongLink());
     }
 
-    public LinkResponse create(LinkRequest url) {
+    public LinkResponse create(LinkRequest url, int width, int height) {
         String shortPath = "";
         boolean unique = false;
         while(!unique) {
@@ -62,10 +76,13 @@ public class HomeServiceImpl implements IHomeService{
 
         LinkResponse response = new LinkResponse();
 
+
+
         response.setId(linkRepository.saveAndFlush(link).getId());
         response.setLongLink(link.getLongLink());
         response.setShortPath(link.getShortPath());
         response.setClicks(link.getClicks());
+
 
         return response;
     }
@@ -84,5 +101,21 @@ public class HomeServiceImpl implements IHomeService{
     private void incrementClicks(Link link) {
         link.incrementClicks();
         linkRepository.save(link);
+    }
+
+
+    @Cacheable(
+            value = "qrCache",
+            key = "#code"
+    )
+    @Override
+    public byte[] generateQr (String code) {
+
+        try {
+            return qrService.generateQRCode(link+"/r/"+code);
+        } catch (Exception e) {
+            throw new RuntimeException("Error generating QR", e);
+        }
+
     }
 }

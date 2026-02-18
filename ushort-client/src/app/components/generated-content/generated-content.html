@@ -1,21 +1,40 @@
-@if (linkResponse != null) {
-  <div class="linkData">
-    <span class="info">
-      <span class="ok">
-        <img src="/ok.svg" alt="ok">
+@if(linkResponse) {
+  <div class="linkDataContainer">
+    <div class="linkData">
+      <span class="info">
+        <span class="ok">
+          <img src="/ok.svg" alt="ok">
+        </span>
+        <span class="data">
+          <span class="data1">Tu url corta en segundos:</span>
+          <span class="data2">
+            <a href="{{ url + linkResponse!.shortPath }}" target="_blank">
+              {{ url + linkResponse!.shortPath! }}
+            </a>
+          </span>
+        </span>
       </span>
-      <span class="data1">
-        Tu url corta en segundos:
-      </span>
-      <span class="data2">
-        <a href="{{ url + linkResponse.shortPath }}" target="_blank">
-          {{ url + linkResponse.shortPath }}
-        </a>
-      </span>
-    </span>
-    <button class="copy" (click)="copy(linkResponse.shortPath)">
-      <img src="/copy.svg" alt="copy">
-      Copiar
-    </button>
+      <button class="copy" (click)="copyLink()">
+        <img src="/copy.svg" alt="copy">
+        Copiar
+      </button>
+    </div>
+
+    @if(qrPath()){
+      <div class="imageContainer">
+        <img [src]="qrPath()" class="qr" alt="QR Code">
+        <div class="btnContainer">
+          <button class="copy" (click)="copyImage()">
+            <img src="/copy.svg" alt="copy">
+            Copiar
+            Imagen
+          </button>
+          <button class="download" (click)="downloadQr()">
+            <img src="/download.svg" alt="download">
+            Descargar
+          </button>
+        </div>
+      </div>
+    }
   </div>
 }

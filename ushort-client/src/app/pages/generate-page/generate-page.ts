@@ -4,6 +4,7 @@ import { Component, computed, inject, signal, Signal, WritableSignal} from '@ang
 import { LinkResponse } from '../../models/link/link-response';
 import { environment } from '@/environments/environment';
 import { GeneratedContent } from '@/app/components/generated-content/generated-content';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-generate-page',
@@ -15,7 +16,8 @@ export class GeneratePage {
   private linkService = inject(LinkService);
   private fb = inject(FormBuilder)
   url = signal(environment.CLIENT_URL+"/r/");
-
+  qrImage = signal("");
+  badFormat = signal(false);
 
   linkResponse: WritableSignal<LinkResponse | null> = signal(null)
 
@@ -23,13 +25,12 @@ export class GeneratePage {
     longUrl: ['', [Validators.required, Validators.pattern('https?://.+')]]
   });
 
-
-
-
   submit(): void {
     if(this.form.invalid || !this.form.value.longUrl) {
+      this.badFormat.set(true);
       return;
     }
+    this.badFormat.set(false);
     const longUrl = this.form.controls.longUrl.value;
 
     this.linkService.generateLink(longUrl).subscribe({
@@ -40,7 +41,6 @@ export class GeneratePage {
         console.error('Error creando link',err);
       }
     })
-
   }
 
 }
