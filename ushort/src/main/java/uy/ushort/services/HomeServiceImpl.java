@@ -28,7 +28,7 @@ public class HomeServiceImpl implements IHomeService{
     @Autowired
     private IQRService qrService;
 
-    @Value("${cors.allowed-origins}")
+    @Value("${front.url}")
     private String link;
 
     @Override
