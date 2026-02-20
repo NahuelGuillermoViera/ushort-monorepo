@@ -17,22 +17,55 @@
   color: rgb(245, 188, 250);
 }
 
-form, .linkData {
+form {
   display: flex;
-  align-items: center;
-  gap: 50px;
+  justify-content: center;
+  gap: 20px;
   background-color: rgba(79, 48, 104, 0.664);
   backdrop-filter: blur(5px);
   padding-block: 15px;
   padding-inline: 20px ;
   border-radius: 15px;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.form {
+  display: flex;
+  gap: 50px;
   height: 70px;
 }
 
-.linkData {
+.warn {
+  display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  width: fit-content;
+  padding: 30px;
+  border-radius: 15px;
+  position: relative;
+  background-color: rgba(255, 174, 0, 0.226);
+  gap: 20px;
+}
+
+.note {
   font-size: 1.5rem;
   color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.note img {
+  height: 50px;
+  width: 50px;
+}
+
+.info {
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 700;
 }
 
 input {
@@ -82,65 +115,4 @@ input::placeholder {
   user-select: none;
 }
 
-.linkData .ok {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(156, 161, 255, 0.575);
-  border-radius: 15px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-column: span 1;
-  grid-row: span 2;
-}
 
-.linkData .ok img {
-  height: 30px;
-}
-
-.linkData .info{
-  display: grid;
-  grid-template-rows: repeat(2,1fr);
-  grid-template-columns: repeat(2,1fr);
-  max-width: 300px;
-  column-gap: 20px;
-}
-
-.linkData .info span {
-  display: flex;
-  align-items: center;
-}
-
-.data1 {
-  font-size: 1.3rem;
-  color: rgb(221, 209, 255);
-}
-
-.data2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.copy {
-  background: none;
-  border: 1px rgb(156, 161, 255) solid;
-  padding: 10px;
-  border-radius: 10px;
-  color: white;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: 150ms linear;
-  cursor: pointer;
-}
-
-.copy img {
-  width: 1.4rem;
-}
-
-.copy:hover {
-  background-color: rgb(156, 161, 255);
-}

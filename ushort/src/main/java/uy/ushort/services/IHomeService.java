@@ -9,5 +9,6 @@ import java.util.List;
 public interface IHomeService {
     public List<LinkResponse> homeResponse();
     public LargeURLResponse getLargeURL(String path);
-    public LinkResponse create(LinkRequest url);
+    public LinkResponse create(LinkRequest url, int width, int height);
+    byte[] generateQr(String code);
 }
